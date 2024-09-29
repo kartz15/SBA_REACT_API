@@ -110,12 +110,53 @@
 
 // export default ShoppingCart;
 
+// import React from 'react';
+
+// const ShoppingCart = ({ cart, removeFromCart }) => {
+//   return (
+//     <div className="shopping-cart">
+//       <h2>Your Shopping Cart</h2> <br/>
+//       {cart.length === 0 ? (
+//         <p>Your cart is empty.</p>
+//       ) : (
+//         <div className="cart-items">
+//           {cart.map((item) => (
+//             <div key={item.id} className="cart-item">
+//               <img src={item.image} alt={item.title} />
+//               <div className="item-details">
+//                 <h3>{item.title}</h3>
+//                 <p>Price: ${item.price}</p>
+//                 <button onClick={() => removeFromCart(item.id)}>Remove</button> {/* Pass item.id here */}
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//       {cart.length > 0 && (
+//         <div className="cart-total">
+//           Total: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+//         </div>
+//       )}
+//       <button className="checkout-button">Proceed to Checkout</button>
+//     </div>
+//   );
+// };
+
+// export default ShoppingCart;
+
 import React from 'react';
 
 const ShoppingCart = ({ cart, removeFromCart }) => {
+
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+
+  const handleCheckout = () => {
+    alert(`You are about to check out with a total price of $${totalPrice}`);
+  };
+
   return (
     <div className="shopping-cart">
-      <h2>Your Shopping Cart</h2> <br/>
+      <h2>Your Shopping Cart</h2> <br />
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -126,7 +167,7 @@ const ShoppingCart = ({ cart, removeFromCart }) => {
               <div className="item-details">
                 <h3>{item.title}</h3>
                 <p>Price: ${item.price}</p>
-                <button onClick={() => removeFromCart(item.id)}>Remove</button> {/* Pass item.id here */}
+                <button className='remove-button' onClick={() => removeFromCart(item.id)}>Remove</button>
               </div>
             </div>
           ))}
@@ -134,10 +175,14 @@ const ShoppingCart = ({ cart, removeFromCart }) => {
       )}
       {cart.length > 0 && (
         <div className="cart-total">
-          Total: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+          Total: ${totalPrice}
         </div>
       )}
-      <button className="checkout-button">Proceed to Checkout</button>
+      {cart.length > 0 && (
+        <button className="checkout-button" onClick={handleCheckout}>
+          Proceed to Checkout
+        </button>
+      )}
     </div>
   );
 };
